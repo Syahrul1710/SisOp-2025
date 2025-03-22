@@ -1,3 +1,10 @@
+Nama: MUHAMMAD SYAHRUL ROMADHON
+kelas: 1 IT A PSDKU LA
+Prodi: D3 Teknik Informatika
+Nrp: 3124521017
+
+Rangkuman apendix-A
+
 A.1 Feature Migration
 
 Materi ini membahas tentang bagaimana fitur sistem operasi yang awalnya hanya tersedia di sistem besar, seperti mainframe, bertransisi dan diterapkan di sistem yang lebih kecil, seperti mikrokomputer. Konsep ini menunjukkan bahwa fitur-fitur yang dikembangkan untuk sistem besar akhirnya diadopsi oleh perangkat yang lebih kecil, seperti desktop dan smartphone.
