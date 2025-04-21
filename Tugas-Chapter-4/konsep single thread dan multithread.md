@@ -20,6 +20,9 @@ gantt
     Thread 2: Task B :b2, 00:00:00, 5s
     Thread 3: Task C :b3, 00:00:00, 5s
     Thread 4: Task D :b4, 00:00:00, 5s
+end
+'''
+    
 
 ## Keuntungan & Kerugian
 ### Singel Thread
