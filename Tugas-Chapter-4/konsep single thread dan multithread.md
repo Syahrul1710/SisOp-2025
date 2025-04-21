@@ -5,7 +5,7 @@ Multithread, di sisi lain, memungkinkan program untuk menjalankan beberapa alur 
 
 ## Visualisasi
 
-'''mermaid
+```mermaid
 gantt
     title Single Thread vs Multithread Execution
     dateFormat  HH:mm:ss
@@ -22,8 +22,7 @@ gantt
     Thread 1 - Task A : 00:00:00, 5s
     Thread 2 - Task B : 00:00:00, 5s
     Thread 3 - Task C : 00:00:00, 5s
-end
-'''
+```
     
 
 ## Keuntungan & Kerugian
