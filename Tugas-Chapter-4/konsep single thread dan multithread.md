@@ -23,7 +23,30 @@ gantt
     Thread 2 - Task B : 00:00:00, 5s
     Thread 3 - Task C : 00:00:00, 5s
 ```
-    
+
+```mermaid
+graph TB
+    subgraph "Single Thread Execution"
+        ST_Start([Start]) --> ST_Task1[Task 1: 5s]
+        ST_Task1 --> ST_Task2[Task 2: 5s]
+        ST_Task2 --> ST_Task3[Task 3: 5s]
+        ST_Task3 --> ST_End([End])
+    end
+
+    subgraph "Multithread Execution"
+        MT_Start([Start]) --> MT_Thread1[Thread 1]
+        MT_Start --> MT_Thread2[Thread 2]
+        MT_Start --> MT_Thread3[Thread 3]
+        
+        MT_Thread1 --> MT_Task1[Task A: 5s]
+        MT_Thread2 --> MT_Task2[Task B: 5s]
+        MT_Thread3 --> MT_Task3[Task C: 5s]
+        
+        MT_Task1 --> MT_End([End])
+        MT_Task2 --> MT_End
+        MT_Task3 --> MT_End
+    end
+```    
 
 ## Keuntungan & Kerugian
 ### Singel Thread
