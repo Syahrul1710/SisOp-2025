@@ -5,176 +5,21 @@ Multithread, di sisi lain, memungkinkan program untuk menjalankan beberapa alur 
 
 ## Visualisasi
 
-// ThreadVisualizer.java
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.swing.*;
-import java.util.concurrent.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ThreadVisualizer extends JFrame {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 500;
-    private static final int TASK_COUNT = 4;
-    private static final int WORK_UNITS = 100;
-    private static final int DELAY_MS = 10;
-    
-    private BufferedImage singleThreadImage;
-    private BufferedImage multiThreadImage;
-    private int singleThreadProgress = 0;
-    private int[] multiThreadProgress = new int[TASK_COUNT];
-    
-    public ThreadVisualizer() {
-        setTitle("Single Thread vs Multithread Visualization");
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
-        // Inisialisasi gambar
-        singleThreadImage = new BufferedImage(WIDTH/2 - 40, HEIGHT - 100, BufferedImage.TYPE_INT_RGB);
-        multiThreadImage = new BufferedImage(WIDTH/2 - 40, HEIGHT - 100, BufferedImage.TYPE_INT_RGB);
-        
-        // Bersihkan gambar
-        Graphics g1 = singleThreadImage.getGraphics();
-        g1.setColor(Color.WHITE);
-        g1.fillRect(0, 0, singleThreadImage.getWidth(), singleThreadImage.getHeight());
-        
-        Graphics g2 = multiThreadImage.getGraphics();
-        g2.setColor(Color.WHITE);
-        g2.fillRect(0, 0, multiThreadImage.getWidth(), multiThreadImage.getHeight());
-        
-        // Panel untuk menampilkan gambar
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                
-                // Judul
-                g.setFont(new Font("Arial", Font.BOLD, 20));
-                g.drawString("Single Thread", WIDTH/4 - 60, 30);
-                g.drawString("Multithread", 3*WIDTH/4 - 60, 30);
-                
-                // Gambar
-                g.drawImage(singleThreadImage, 20, 50, this);
-                g.drawImage(multiThreadImage, WIDTH/2 + 20, 50, this);
-                
-                // Progress text
-                g.setFont(new Font("Arial", Font.PLAIN, 14));
-                g.drawString("Progress: " + singleThreadProgress + "%", WIDTH/4 - 40, HEIGHT - 20);
-                
-                int totalMultiProgress = 0;
-                for (int progress : multiThreadProgress) {
-                    totalMultiProgress += progress;
-                }
-                totalMultiProgress /= TASK_COUNT;
-                g.drawString("Progress: " + totalMultiProgress + "%", 3*WIDTH/4 - 40, HEIGHT - 20);
-            }
-        };
-        
-        add(panel);
-        
-        JButton startButton = new JButton("Start Visualization");
-        startButton.addActionListener(e -> startVisualization());
-        
-        panel.setLayout(new BorderLayout());
-        panel.add(startButton, BorderLayout.SOUTH);
-        
-        setVisible(true);
-    }
-    
-    private void startVisualization() {
-        // Reset progress
-        singleThreadProgress = 0;
-        for (int i = 0; i < TASK_COUNT; i++) {
-            multiThreadProgress[i] = 0;
-        }
-        
-        // Reset gambar
-        Graphics g1 = singleThreadImage.getGraphics();
-        g1.setColor(Color.WHITE);
-        g1.fillRect(0, 0, singleThreadImage.getWidth(), singleThreadImage.getHeight());
-        
-        Graphics g2 = multiThreadImage.getGraphics();
-        g2.setColor(Color.WHITE);
-        g2.fillRect(0, 0, multiThreadImage.getWidth(), multiThreadImage.getHeight());
-        
-        // Ukuran task
-        int taskHeight = singleThreadImage.getHeight() / TASK_COUNT;
-        
-        // Warna untuk task
-        Color[] colors = {
-            new Color(66, 133, 244),  // Google Blue
-            new Color(52, 168, 83),   // Google Green
-            new Color(251, 188, 5),   // Google Yellow
-            new Color(234, 67, 53)    // Google Red
-        };
-        
-        // Thread untuk visualisasi single thread
-        new Thread(() -> {
-            // Simulasikan pemrosesan single thread
-            Graphics g = singleThreadImage.getGraphics();
-            for (int task = 0; task < TASK_COUNT; task++) {
-                g.setColor(colors[task]);
-                
-                // Label task
-                g.setFont(new Font("Arial", Font.BOLD, 14));
-                g.drawString("Task " + (char)('A' + task), 10, task * taskHeight + 20);
-                
-                // Proses task
-                for (int unit = 0; unit < WORK_UNITS; unit++) {
-                    int width = (singleThreadImage.getWidth() - 20) / WORK_UNITS;
-                    g.fillRect(20 + unit * width, task * taskHeight + 5, width - 1, taskHeight - 10);
-                    
-                    singleThreadProgress = (task * 100 + unit * 100 / WORK_UNITS) / TASK_COUNT;
-                    repaint();
-                    
-                    try {
-                        Thread.sleep(DELAY_MS);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-        
-        // Thread untuk visualisasi multithread
-        ExecutorService executor = Executors.newFixedThreadPool(TASK_COUNT);
-        for (int task = 0; task < TASK_COUNT; task++) {
-            final int currentTask = task;
-            executor.submit(() -> {
-                Graphics g = multiThreadImage.getGraphics();
-                g.setColor(colors[currentTask]);
-                
-                // Label task
-                g.setFont(new Font("Arial", Font.BOLD, 14));
-                g.drawString("Thread " + (currentTask + 1) + ": Task " + (char)('A' + currentTask), 
-                             10, currentTask * taskHeight + 20);
-                
-                // Proses task
-                for (int unit = 0; unit < WORK_UNITS; unit++) {
-                    int width = (multiThreadImage.getWidth() - 20) / WORK_UNITS;
-                    g.fillRect(20 + unit * width, currentTask * taskHeight + 5, width - 1, taskHeight - 10);
-                    
-                    multiThreadProgress[currentTask] = (unit + 1) * 100 / WORK_UNITS;
-                    repaint();
-                    
-                    try {
-                        Thread.sleep(DELAY_MS);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-        
-        executor.shutdown();
-    }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ThreadVisualizer());
-    }
-}
+'''mermaid
+gantt
+    title Visualisasi Single Thread vs Multithread
+    dateFormat  HH:mm:ss
+    axisFormat %S
+    section Single Thread
+    Task A           :a1, 00:00:00, 5s
+    Task B           :a2, after a1, 5s
+    Task C           :a3, after a2, 5s
+    Task D           :a4, after a3, 5s
+    section Multithread
+    Thread 1: Task A :b1, 00:00:00, 5s
+    Thread 2: Task B :b2, 00:00:00, 5s
+    Thread 3: Task C :b3, 00:00:00, 5s
+    Thread 4: Task D :b4, 00:00:00, 5s
 
 ## Keuntungan & Kerugian
 ### Singel Thread
