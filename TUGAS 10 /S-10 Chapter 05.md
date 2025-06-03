@@ -8,6 +8,8 @@
 
 **Studi Kasus dari PDF:**
 Contoh pada halaman 207-208:
+![image](https://github.com/user-attachments/assets/be383e33-4b9e-40fe-a153-1e89968ce840)
+
 ```
 Process  Burst Time
 P1       6
@@ -35,6 +37,8 @@ P4 | P1 | P3 | P2
 
 **Studi Kasus dari PDF:**
 Contoh pada halaman 209:
+![image](https://github.com/user-attachments/assets/f2d0cc33-fef7-4703-8151-95b43985eadb)
+
 ```
 Process  Arrival Time  Burst Time
 P1       0             8
@@ -61,7 +65,7 @@ P1 | P2 | P4 | P1 | P3
 - Lebih responsif untuk proses pendek
 - Overhead konteks switch lebih tinggi
 
-**Studi Kasus dari PDF:**
+**Studi Kasus:**
 Contoh yang sama dengan SJF dengan arrival time di atas, tetapi dengan pendekatan preemptive.
 
 **Gantt Chart:**
