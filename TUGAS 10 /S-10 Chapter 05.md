@@ -8,6 +8,7 @@
 
 **Studi Kasus dari PDF:**
 Contoh pada halaman 207-208:
+
 ![image](https://github.com/user-attachments/assets/be383e33-4b9e-40fe-a153-1e89968ce840)
 
 ```
@@ -37,6 +38,7 @@ P4 | P1 | P3 | P2
 
 **Studi Kasus dari PDF:**
 Contoh pada halaman 209:
+
 ![image](https://github.com/user-attachments/assets/f2d0cc33-fef7-4703-8151-95b43985eadb)
 
 ```
