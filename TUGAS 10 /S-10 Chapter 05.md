@@ -19,11 +19,7 @@ P3       7
 P4       3
 ```
 
-**Gantt Chart:**
-```
-P4 | P1 | P3 | P2
-0  3   9   16  24
-```
+
 
 **Perhitungan:**
 - Waiting time: P1=3, P2=16, P3=9, P4=0
@@ -49,11 +45,7 @@ P3       2             9
 P4       3             5
 ```
 
-**Gantt Chart:**
-```
-P1 | P2 | P4 | P1 | P3
-0  1   5   10  17  26
-```
+
 
 **Perhitungan:**
 - Waiting time: P1=(10-1)=9, P2=0, P3=(17-2)=15, P4=(5-3)=2
@@ -70,12 +62,8 @@ P1 | P2 | P4 | P1 | P3
 **Studi Kasus:**
 Contoh yang sama dengan SJF dengan arrival time di atas, tetapi dengan pendekatan preemptive.
 
-**Gantt Chart:**
-```
-P1 | P2 | P4 | P1 | P3
-0  1   5   10  17  26
-```
-(Pada kasus ini hasilnya sama karena tidak ada proses baru yang tiba saat proses berjalan yang memiliki sisa waktu lebih pendek)
+
+
 
 # Implementasi Kode
 
